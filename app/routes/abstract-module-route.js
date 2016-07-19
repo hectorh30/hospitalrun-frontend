@@ -121,15 +121,27 @@ export default Ember.Route.extend(UserSession, AuthenticatedRouteMixin, {
 
   setupController: function(controller, model) {
     var navigationController = this.controllerFor('navigation');
+
     if (this.get('allowSearch') === true) {
       navigationController.set('allowSearch', true);
       navigationController.set('searchRoute', this.get('searchRoute'));
     } else {
       navigationController.set('allowSearch', false);
     }
+
     var currentController = this.controllerFor(this.get('moduleName'));
-    var propsToSet = this.getProperties('additionalButtons', 'currentScreenTitle', 'newButtonAction', 'newButtonText', 'sectionTitle', 'subActions');
+
+    var propsToSet = this.getProperties(
+      'additionalButtons',
+      'currentScreenTitle',
+      'newButtonAction',
+      'newButtonText',
+      'sectionTitle',
+      'subActions'
+    );
+
     currentController.setProperties(propsToSet);
+
     if (!Ember.isEmpty(this.additionalModels)) {
       this.additionalModels.forEach(function(item) {
         controller.set(item.name, this.get(item.name));
