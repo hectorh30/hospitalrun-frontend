@@ -29,7 +29,7 @@
   "license": "GPL-3.0",
   "devDependencies": {
     "body-parser": "^1.14.2",
-    "broccoli-asset-rev": "^2.4.2",
+    "broccoli-asset-rev": "^2.4.5",
     "broccoli-export-text": "0.0.2",
     "broccoli-funnel": "^1.0.2",
     "broccoli-manifest": "0.0.7",
@@ -52,9 +52,10 @@
     "ember-cli-release": "^0.2.9",
     "ember-cli-sass": "^5.2.1",
     "ember-cli-sri": "^2.1.0",
-    "ember-cli-stylelint": "^0.2.1",
+    "ember-cli-stylelint": "^0.2.2",
+    "ember-cli-template-lint": "0.4.11",
     "ember-cli-uglify": "^1.2.0",
-    "ember-data": "^2.6.0",
+    "ember-data": "~2.6.2",
     "ember-export-application-global": "^1.0.5",
     "ember-i18n": "4.2.2",
     "ember-load-initializers": "^0.5.1",
@@ -73,7 +74,7 @@
     "hospitalrun-server-routes": "0.9.8",
     "loader.js": "4.0.10",
     "nano": "6.2.0",
-    "request": "2.73.0",
+    "request": "2.74.0",
     "stylelint-config-concentric": "^1.0.3",
     "stylelint-declaration-use-variable": "^1.4.0",
     "stylelint-scss": "^1.2.0",
@@ -86,6 +87,6 @@
   },
   "snyk": true,
   "dependencies": {
-    "snyk": "^1.16.0"
+    "snyk": "^1.17.4"
   }
 }
