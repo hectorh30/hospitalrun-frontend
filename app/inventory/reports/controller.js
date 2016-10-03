@@ -297,7 +297,7 @@ export default AbstractReportController.extend(LocationName, ModalHelper, Number
         } else {
           formattedName = this._getWarehouseLocationName(location.name);
         }
-        if (!returnLocations.contains(formattedName)) {
+        if (!returnLocations.includes(formattedName)) {
           returnLocations.push(formattedName);
         }
       }.bind(this));
@@ -307,10 +307,9 @@ export default AbstractReportController.extend(LocationName, ModalHelper, Number
 
   _addReportRow: function(row, skipNumberFormatting, reportColumns, rowAction) {
     if (Ember.isEmpty(rowAction) && !Ember.isEmpty(row.inventoryItem) && !Ember.isEmpty(row.inventoryItem.id)) {
-      var inventoryId = this.get('database').getEmberId(row.inventoryItem.id);
       rowAction = {
         action: 'viewInventory',
-        model: inventoryId
+        model: row.inventoryItem.id
       };
     }
     this._super(row, skipNumberFormatting, reportColumns, rowAction);
@@ -425,7 +424,7 @@ export default AbstractReportController.extend(LocationName, ModalHelper, Number
           inventoryIds = [];
         if (!Ember.isEmpty(inventoryChildren.rows)) {
           inventoryChildren.rows.forEach(function(child) {
-            if (child.doc.inventoryItem && !inventoryKeys.contains(child.doc.inventoryItem)) {
+            if (child.doc.inventoryItem && !inventoryKeys.includes(child.doc.inventoryItem)) {
               inventoryIds.push(database.getPouchId(child.doc.inventoryItem, 'inventory'));
               inventoryKeys.push(child.doc.inventoryItem);
             }
@@ -436,7 +435,7 @@ export default AbstractReportController.extend(LocationName, ModalHelper, Number
           inventoryChildren.rows.forEach(function(child) {
             var childItem = inventoryMap[child.doc.inventoryItem];
             if (!Ember.isEmpty(childItem)) {
-              if (childName !== 'purchaseObjects' || childItem.purchases.contains(child.doc.id)) {
+              if (childName !== 'purchaseObjects' || childItem.purchases.includes(child.doc.id)) {
                 var itemChildren = childItem[childName];
                 if (Ember.isEmpty(itemChildren)) {
                   itemChildren = [];
@@ -865,7 +864,7 @@ export default AbstractReportController.extend(LocationName, ModalHelper, Number
                 row.giftInKind = 'Y';
               }
               if (!Ember.isEmpty(purchase.vendor)) {
-                if (!row.vendors.contains(purchase.vendor)) {
+                if (!row.vendors.includes(purchase.vendor)) {
                   row.vendors.push(purchase.vendor);
                 }
               }
@@ -1142,7 +1141,7 @@ export default AbstractReportController.extend(LocationName, ModalHelper, Number
         include_docs: true
       }).then(function(inventoryItems) {
         inventoryItems.rows.forEach(function(inventoryItem) {
-          if (inventoryItem.doc) {
+          if (inventoryItem.doc && inventoryItem.doc.archived !== true) {
             inventoryMap[inventoryItem.doc.id] = inventoryItem.doc;
           }
         });

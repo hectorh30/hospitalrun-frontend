@@ -126,8 +126,8 @@ export default Adapter.extend(PouchAdapterUtils, {
     }
   },
 
-  generateIdForRecord() {
-    return PouchDB.utils.uuid();
+  generateIdForRecord: function() {
+    return uuid.v4();
   },
 
   query(store, type, query, options) {
@@ -195,7 +195,8 @@ export default Adapter.extend(PouchAdapterUtils, {
                 if (err) {
                   this._pouchError(reject)(err);
                 } else {
-                  this._handleQueryResponse(response.json, store, type).then(resolve, reject);
+                  let responseJSON = JSON.parse(response.body);
+                  this._handleQueryResponse(responseJSON, store, type).then(resolve, reject);
                 }
               });
             } else {
