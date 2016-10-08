@@ -3,6 +3,7 @@ import Ember from 'ember';
 import EmberValidations from 'ember-validations';
 import { Model } from 'ember-pouch';
 import UserSession from 'hospitalrun/mixins/user-session';
+
 export default Model.extend(UserSession, EmberValidations, {
   session: Ember.inject.service(),
   archived: DS.attr('boolean'),
@@ -39,6 +40,7 @@ export default Model.extend(UserSession, EmberValidations, {
       this.set('modifiedFields', modifiedFields);
       this.set('modifiedBy', this.getUserName());
     }
+
     return this._super(options).catch(function(error) {
       if (!Ember.isEmpty(options) && options.retry) {
         throw error;

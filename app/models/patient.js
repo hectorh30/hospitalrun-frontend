@@ -99,5 +99,4 @@ export default AbstractModel.extend(DOBDays, PatientName, {
       presence: true
     }
   }
-
 });
