@@ -1,4 +1,5 @@
 import Ember from 'ember';
+
 export default Ember.Mixin.create({
   session: Ember.inject.service(),
   defaultCapabilities: {
@@ -453,6 +454,7 @@ export default Ember.Mixin.create({
 
   _getUserSessionVars: function() {
     var session = this.get('session');
+
     if (!Ember.isEmpty(session) && session.get('isAuthenticated')) {
       return session.get('data.authenticated');
     }
@@ -484,6 +486,7 @@ export default Ember.Mixin.create({
   getUserName: function(returnUserName) {
     var returnName,
       sessionVars = this._getUserSessionVars();
+
     if (!Ember.isEmpty(sessionVars)) {
       if (returnUserName) {
         returnName = sessionVars.name;
@@ -493,6 +496,7 @@ export default Ember.Mixin.create({
         returnName = sessionVars.name;
       }
     }
+
     return returnName;
   }
 });
