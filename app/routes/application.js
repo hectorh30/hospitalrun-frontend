@@ -42,6 +42,7 @@ var ApplicationRoute = Route.extend(ApplicationRouteMixin, SetupUserRole, {
   model: function(params, transition) {
     const session = this.get('session');
     const isAuthenticated = session && session.get('isAuthenticated');
+
     return this.get('config').setup().then(function(configs) {
       if (transition.targetName !== 'finishgauth' && transition.targetName !== 'login') {
         this.set('shouldSetupUserRole', true);
@@ -60,6 +61,7 @@ var ApplicationRoute = Route.extend(ApplicationRouteMixin, SetupUserRole, {
 
   afterModel: function() {
     this.controllerFor('navigation').set('allowSearch', false);
+
     $('#apploading').remove();
   },
 
@@ -74,8 +76,10 @@ var ApplicationRoute = Route.extend(ApplicationRouteMixin, SetupUserRole, {
     if (this.get('shouldSetupUserRole') === true) {
       this.setupUserRole();
     }
+
     this._super();
   }
 
 });
+
 export default ApplicationRoute;

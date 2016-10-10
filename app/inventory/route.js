@@ -1,10 +1,13 @@
 import AbstractModuleRoute from 'hospitalrun/routes/abstract-module-route';
 import FulfillRequest from 'hospitalrun/mixins/fulfill-request';
 import InventoryId from 'hospitalrun/mixins/inventory-id';
-import InventoryLocations from 'hospitalrun/mixins/inventory-locations'; // inventory-locations mixin is needed for fulfill-request mixin!
+
+// inventory-locations mixin is needed for fulfill-request mixin!
+import InventoryLocations from 'hospitalrun/mixins/inventory-locations';
 
 export default AbstractModuleRoute.extend(FulfillRequest, InventoryId, InventoryLocations, {
   addCapability: 'add_inventory_item',
+
   additionalButtons: function() {
     if (this.currentUserCan(this.get('addCapability'))) {
       return [{
@@ -15,25 +18,32 @@ export default AbstractModuleRoute.extend(FulfillRequest, InventoryId, Inventory
     }
   }.property(),
 
-  additionalModels: [{
-    name: 'aisleLocationList',
-    findArgs: ['lookup', 'aisle_location_list']
-  }, {
-    name: 'expenseAccountList',
-    findArgs: ['lookup', 'expense_account_list']
-  }, {
-    name: 'inventoryTypeList',
-    findArgs: ['lookup', 'inventory_types']
-  }, {
-    name: 'inventoryUnitList',
-    findArgs: ['lookup','unit_types']
-  }, {
-    name: 'warehouseList',
-    findArgs: ['lookup', 'warehouse_list']
-  }, {
-    name: 'vendorList',
-    findArgs: ['lookup', 'vendor_list']
-  }],
+  additionalModels: [
+    {
+      name: 'aisleLocationList',
+      findArgs: ['lookup', 'aisle_location_list']
+    },
+    {
+      name: 'expenseAccountList',
+      findArgs: ['lookup', 'expense_account_list']
+    },
+    {
+      name: 'inventoryTypeList',
+      findArgs: ['lookup', 'inventory_types']
+    },
+    {
+      name: 'inventoryUnitList',
+      findArgs: ['lookup','unit_types']
+    },
+    {
+      name: 'warehouseList',
+      findArgs: ['lookup', 'warehouse_list']
+    },
+    {
+      name: 'vendorList',
+      findArgs: ['lookup', 'vendor_list']
+    }
+  ],
 
   currentItem: null,
   moduleName: 'inventory',

@@ -1,4 +1,5 @@
 import Ember from 'ember';
+
 // NOTE!!! inventory-locations mixin is needed for fulfill-request mixin!
 export default Ember.Mixin.create({
   actions: {

@@ -1,4 +1,5 @@
 import Ember from 'ember';
+
 export default Ember.Mixin.create({
   progressDialog: null,
   progressDialogDefaults: {
@@ -39,9 +40,11 @@ export default Ember.Mixin.create({
 
   showProgressModal: function() {
     var progressDialog = Ember.Object.create(this.get('progressDialogDefaults'));
+
     progressDialog.progressBarStyle = new Ember.String.htmlSafe(progressDialog.progressBarStyle);
     progressDialog.set('title', this.get('progressTitle'));
     progressDialog.set('message', this.get('progressMessage'));
+
     this.set('progressDialog', progressDialog);
     this.set('progressTimer', this.scheduleProgress(this.get('updateProgressBar')));
     this.send('openModal', 'dialog', progressDialog);

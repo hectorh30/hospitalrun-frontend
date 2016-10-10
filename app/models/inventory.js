@@ -45,6 +45,7 @@ export default AbstractModel.extend(LocationName, {
   displayLocations: computed('availableLocations', function() {
     var locations = this.get('availableLocations'),
       returnLocations = [];
+
     locations.forEach((currentLocation) => {
       var aisleLocationName = currentLocation.get('aisleLocation'),
         locationName = currentLocation.get('location'),
@@ -53,6 +54,7 @@ export default AbstractModel.extend(LocationName, {
         returnLocations.push(displayLocationName);
       }
     });
+
     return returnLocations.toString();
   }),
 

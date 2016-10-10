@@ -7,9 +7,9 @@ export default AbstractIndexRoute.extend(UserSession, {
   newButtonAction: function() {
     if (this.currentUserCan('add_inventory_request')) {
       return 'newRequest';
-    } else {
-      return null;
     }
+
+    return null;
   }.property(),
   newButtonText: t('buttons.newRequestPlus'),
   pageTitle: t('navigation.subnav.requests'),
@@ -21,6 +21,7 @@ export default AbstractIndexRoute.extend(UserSession, {
 
   _modelQueryParams: function() {
     var maxValue = this.get('maxValue');
+
     return {
       options: {
         startkey: ['Requested', null, null],

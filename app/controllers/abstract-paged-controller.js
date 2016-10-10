@@ -2,6 +2,7 @@ import Ember from 'ember';
 import PaginationProps from 'hospitalrun/mixins/pagination-props';
 import ProgressDialog from 'hospitalrun/mixins/progress-dialog';
 import UserSession from 'hospitalrun/mixins/user-session';
+
 export default Ember.Controller.extend(PaginationProps, ProgressDialog, UserSession, {
   addPermission: null,
   deletePermission: null,
@@ -59,20 +60,26 @@ export default Ember.Controller.extend(PaginationProps, ProgressDialog, UserSess
       var key = this.get('nextStartKey'),
         previousStartKeys = this.get('previousStartKeys'),
         firstKey = this.get('firstKey');
+
       this.set('previousStartKey', firstKey);
       previousStartKeys.push(firstKey);
       this.set('startKey', key);
+
       this.showProgressModal();
     },
+
     previousPage: function() {
       var key = this.get('previousStartKey'),
         previousStartKeys = this.get('previousStartKeys');
+
       previousStartKeys.pop();
       this.set('startKey', key);
       this.set('previousStartKey', previousStartKeys.pop());
       this.set('previousStartKeys', previousStartKeys);
+
       this.showProgressModal();
     },
+
     sortByKey: function(sortKey, sortDesc) {
       this.setProperties({
         previousStartKey: null,
@@ -81,6 +88,7 @@ export default Ember.Controller.extend(PaginationProps, ProgressDialog, UserSess
         sortKey: sortKey,
         startKey: null
       });
+
       this.showProgressModal();
     }
   }

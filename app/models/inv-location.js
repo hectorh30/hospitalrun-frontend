@@ -2,6 +2,7 @@ import AbstractModel from 'hospitalrun/models/abstract';
 import DS from 'ember-data';
 import Ember from 'ember';
 import LocationName from 'hospitalrun/mixins/location-name';
+
 /**
  * Model to represent the location(s) of inventory items.
  * File/model name is inv-location because using inv-location will cause location

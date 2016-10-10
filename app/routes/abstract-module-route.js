@@ -1,6 +1,7 @@
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import Ember from 'ember';
 import UserSession from 'hospitalrun/mixins/user-session';
+
 /**
  * Abstract route for top level modules (eg patients, inventory, users)
  */
@@ -27,9 +28,9 @@ export default Ember.Route.extend(UserSession, AuthenticatedRouteMixin, {
   newButtonAction: function() {
     if (this.currentUserCan(this.get('addCapability'))) {
       return 'newItem';
-    } else {
-      return null;
     }
+
+    return null;
   }.property(),
 
   searchRoute: function() {
@@ -56,17 +57,19 @@ export default Ember.Route.extend(UserSession, AuthenticatedRouteMixin, {
 
     /**
      * Action to set items in the section header.
-     * @param details an object containing details to set on the section header.
+     *
      * The following parameters are supported:
      * - currentScreenTitle - The current screen title.
      * - newButtonText - The text to display for the "new" button.
      * - newButtonAction - The action to fire for the "new" button.
+     *
+     * @param details an object containing details to set on the section header.
      */
     setSectionHeader: function(details) {
       var currentController = this.controllerFor(this.get('moduleName'));
+
       currentController.setProperties(details);
     }
-
   },
 
   /**
@@ -74,10 +77,12 @@ export default Ember.Route.extend(UserSession, AuthenticatedRouteMixin, {
    */
   beforeModel: function(transition) {
     var moduleName = this.get('moduleName');
+
     if (this.currentUserCan(moduleName)) {
       return this._super(transition);
     } else {
       this.transitionTo('index');
+
       return Ember.RSVP.reject('Not available');
     }
   },
@@ -92,27 +97,44 @@ export default Ember.Route.extend(UserSession, AuthenticatedRouteMixin, {
   },
 
   model: function() {
-    if (!Ember.isEmpty(this.additionalModels)) {
-      return new Ember.RSVP.Promise(function(resolve, reject) {
-        var promises = this.additionalModels.map(function(modelMap) {
-          if (modelMap.findArgs.length === 1) {
-            return this.store.findAll.apply(this.store, modelMap.findArgs);
-          } else {
-            return this.store.find.apply(this.store, modelMap.findArgs);
-          }
-        }.bind(this));
-        Ember.RSVP.allSettled(promises, 'All additional Models for ' + this.get('moduleName')).then(function(array) {
-          array.forEach(function(item, index) {
-            if (item.state === 'fulfilled') {
-              this.set(this.additionalModels[index].name, item.value);
-            }
-          }.bind(this));
-          resolve();
-        }.bind(this), reject);
-      }.bind(this), 'Additional Models for' + this.get('moduleName'));
-    } else {
+
+    if (Ember.isEmpty(this.additionalModels)) {
       return Ember.RSVP.resolve();
     }
+
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+
+      var promises = this.additionalModels.map(
+        function(modelMap) {
+
+          if (modelMap.findArgs.length === 1) {
+            return this.store.findAll.apply(this.store, modelMap.findArgs);
+          }
+
+          return this.store.find.apply(this.store, modelMap.findArgs);
+
+        }.bind(this)
+      );
+
+      Ember.RSVP.allSettled(
+        promises,
+        'All additional Models for ' + this.get('moduleName')
+      ).then(
+        function(array) {
+          array.forEach(
+            function(item, index) {
+              if (item.state === 'fulfilled') {
+                this.set(this.additionalModels[index].name, item.value);
+              }
+            }.bind(this)
+          );
+
+          resolve();
+        }.bind(this),
+        reject
+      );
+
+    }.bind(this), 'Additional Models for' + this.get('moduleName'));
   },
 
   renderTemplate: function() {
@@ -143,11 +165,13 @@ export default Ember.Route.extend(UserSession, AuthenticatedRouteMixin, {
     currentController.setProperties(propsToSet);
 
     if (!Ember.isEmpty(this.additionalModels)) {
-      this.additionalModels.forEach(function(item) {
-        controller.set(item.name, this.get(item.name));
-      }.bind(this));
+      this.additionalModels.forEach(
+        function(item) {
+          controller.set(item.name, this.get(item.name));
+        }.bind(this)
+      );
     }
+
     this._super(controller, model);
   }
-
 });
