@@ -21,7 +21,7 @@ export default AbstractIndexRoute.extend(UserSession, {
   },
 
   _getStartKeyFromItem: function(item) {
-    var inventoryId = this._getPouchIdFromItem(item);
+    let inventoryId = this._getPouchIdFromItem(item);
     return [item.get('name'), inventoryId];
   }
 });

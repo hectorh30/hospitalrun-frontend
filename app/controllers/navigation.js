@@ -45,7 +45,7 @@ export default Ember.Controller.extend(
 
       search: function() {
         if (this.allowSearch && this.searchRoute) {
-          var currentRouteName = this.get('currentRouteName'),
+          let currentRouteName = this.get('currentRouteName'),
             currentSearchText = this.get('currentSearchText'),
             textToFind = this.get('searchText');
           if (currentSearchText !== textToFind || currentRouteName.indexOf('.search') === -1) {

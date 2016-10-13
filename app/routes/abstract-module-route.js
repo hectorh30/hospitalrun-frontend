@@ -16,12 +16,12 @@ export default Ember.Route.extend(UserSession, AuthenticatedRouteMixin, {
   subActions: null,
 
   editPath: function() {
-    var module = this.get('moduleName');
+    let module = this.get('moduleName');
     return module + '.edit';
   }.property('moduleName'),
 
   deletePath: function() {
-    var module = this.get('moduleName');
+    let module = this.get('moduleName');
     return module + '.delete';
   }.property('moduleName'),
 
@@ -34,7 +34,7 @@ export default Ember.Route.extend(UserSession, AuthenticatedRouteMixin, {
   }.property(),
 
   searchRoute: function() {
-    var module = this.get('moduleName');
+    let module = this.get('moduleName');
     return '/' + module + '/search';
   }.property('moduleName'),
 
@@ -43,7 +43,7 @@ export default Ember.Route.extend(UserSession, AuthenticatedRouteMixin, {
       this.transitionTo(this.get('moduleName') + '.index');
     },
     deleteItem: function(item) {
-      var deletePath = this.get('deletePath');
+      let deletePath = this.get('deletePath');
       this.send('openModal', deletePath, item);
     },
     editItem: function(item) {
@@ -66,7 +66,7 @@ export default Ember.Route.extend(UserSession, AuthenticatedRouteMixin, {
      * @param details an object containing details to set on the section header.
      */
     setSectionHeader: function(details) {
-      var currentController = this.controllerFor(this.get('moduleName'));
+      let currentController = this.controllerFor(this.get('moduleName'));
 
       currentController.setProperties(details);
     }
@@ -76,7 +76,7 @@ export default Ember.Route.extend(UserSession, AuthenticatedRouteMixin, {
    * Make sure the user has permissions to the module; if not reroute to index.
    */
   beforeModel: function(transition) {
-    var moduleName = this.get('moduleName');
+    let moduleName = this.get('moduleName');
 
     if (this.currentUserCan(moduleName)) {
       return this._super(transition);
@@ -104,7 +104,7 @@ export default Ember.Route.extend(UserSession, AuthenticatedRouteMixin, {
 
     return new Ember.RSVP.Promise(function(resolve, reject) {
 
-      var promises = this.additionalModels.map(
+      let promises = this.additionalModels.map(
         function(modelMap) {
 
           if (modelMap.findArgs.length === 1) {
@@ -142,7 +142,7 @@ export default Ember.Route.extend(UserSession, AuthenticatedRouteMixin, {
   },
 
   setupController: function(controller, model) {
-    var navigationController = this.controllerFor('navigation');
+    let navigationController = this.controllerFor('navigation');
 
     if (this.get('allowSearch') === true) {
       navigationController.set('allowSearch', true);
@@ -151,9 +151,9 @@ export default Ember.Route.extend(UserSession, AuthenticatedRouteMixin, {
       navigationController.set('allowSearch', false);
     }
 
-    var currentController = this.controllerFor(this.get('moduleName'));
+    let currentController = this.controllerFor(this.get('moduleName'));
 
-    var propsToSet = this.getProperties(
+    let propsToSet = this.getProperties(
       'additionalButtons',
       'currentScreenTitle',
       'newButtonAction',

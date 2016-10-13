@@ -453,7 +453,7 @@ export default Ember.Mixin.create({
   },
 
   _getUserSessionVars: function() {
-    var session = this.get('session');
+    let session = this.get('session');
 
     if (!Ember.isEmpty(session) && session.get('isAuthenticated')) {
       return session.get('data.authenticated');
@@ -461,12 +461,12 @@ export default Ember.Mixin.create({
   },
 
   currentUserCan: function(capability) {
-    var sessionVars = this._getUserSessionVars();
+    let sessionVars = this._getUserSessionVars();
     if (!Ember.isEmpty(sessionVars) && !Ember.isEmpty(sessionVars.role)) {
-      var userCaps = this.get('session').get('data.authenticated.userCaps');
+      let userCaps = this.get('session').get('data.authenticated.userCaps');
       if (Ember.isEmpty(userCaps)) {
-        var capabilities = this.get('defaultCapabilities');
-        var supportedRoles = capabilities[capability];
+        let capabilities = this.get('defaultCapabilities');
+        let supportedRoles = capabilities[capability];
         if (!Ember.isEmpty(supportedRoles)) {
           return supportedRoles.includes(sessionVars.role);
         }
@@ -484,7 +484,7 @@ export default Ember.Mixin.create({
    * of the display name even if the display name is set.
    */
   getUserName: function(returnUserName) {
-    var returnName,
+    let returnName,
       sessionVars = this._getUserSessionVars();
 
     if (!Ember.isEmpty(sessionVars)) {
