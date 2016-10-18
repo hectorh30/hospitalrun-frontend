@@ -23,7 +23,7 @@ toolbox.router.get('/db/main/_design/:design_doc/_view/:view', function(request,
   logDebug('request for view:', request.url);
   return couchDBResponse(request, values, options, function(request) {
     let options = getDBOptions(request.url);
-    let mapReduce = values.design_doc + '/' + values.view;
+    let mapReduce = `${values.design_doc}/${values.view}`;
     logDebug('queryPouchDB:', mapReduce, options);
     return localMainDB.query(mapReduce, options);
   });
@@ -58,7 +58,7 @@ function setupRemoteSync() {
       pouchOptions.ajax.headers['x-oauth-token-secret'] = configs.config_token_secret;
       pouchOptions.ajax.headers['x-oauth-token'] = configs.config_oauth_token;
     }
-    let remoteURL = self.location.protocol + '//' + self.location.host + '/db/main';
+    let remoteURL = `${self.location.protocol}//${self.location.host}/db/main`;
     let remoteDB = new PouchDB(remoteURL, pouchOptions);
     syncingRemote = localMainDB.sync(remoteDB, {
       live: true,
@@ -134,12 +134,10 @@ function convertPouchToResponse(pouchResponse) {
 function getDBOptions(url) {
   let returnParams = {};
   if (url.indexOf('?') > 0) {
-    let urlParams = url.split('?'),
-    params = decodeURIComponent(urlParams[1]).split('&'),
-    paramParts,
-    i;
-    for (i = 0; i < params.length; i++) {
-      paramParts = params[i].split('=');
+    let urlParams = url.split('?');
+    let params = decodeURIComponent(urlParams[1]).split('&');
+    for (let i = 0; i < params.length; i++) {
+      let paramParts = params[i].split('=');
       returnParams[paramParts[0]] = JSON.parse(paramParts[1]);
     }
   }
@@ -149,7 +147,7 @@ function getDBOptions(url) {
 function logPerformance(elapsedTime, requestUrl) {
   if (configs.config_log_metrics && configs.current_user) {
     let now = Date.now();
-    let timingId = 'timing_' + configs.current_user.toLowerCase() + '_' + now;
+    let timingId = `timing_${configs.current_user.toLowerCase()}_${now}`;
     localMainDB.put({
       _id: timingId,
       elapsed: elapsedTime,
