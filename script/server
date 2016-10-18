@@ -28,4 +28,4 @@ echo -n 'Checking CouchDB...'
 retry_check 3 check_couchdb || warn
 
 echo 'Starting ember server'
-ember serve
+ember autoserve
