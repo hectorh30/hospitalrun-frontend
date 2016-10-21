@@ -1,8 +1,11 @@
 import AbstractPagedController from 'hospitalrun/controllers/abstract-paged-controller';
 import PatientVisits from 'hospitalrun/mixins/patient-visits';
+
 export default AbstractPagedController.extend(PatientVisits, {
   addPermission: 'add_patient',
+
   deletePermission: 'delete_patient',
+
   canAdmitPatient: function() {
     return this.currentUserCan('admit_patient');
   }.property(),
@@ -12,6 +15,7 @@ export default AbstractPagedController.extend(PatientVisits, {
   }.property(),
 
   startKey: [],
+
   actions: {
     admitPatient: function(patient) {
       this.getPatientVisits(patient).then(function(visits) {

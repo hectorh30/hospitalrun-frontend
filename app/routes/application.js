@@ -79,7 +79,6 @@ let ApplicationRoute = Route.extend(ApplicationRouteMixin, SetupUserRole, {
 
     this._super();
   }
-
 });
 
 export default ApplicationRoute;

@@ -15,6 +15,12 @@ export default Ember.Route.extend(PouchDbMixin, ProgressDialog, AuthenticatedRou
   nextStartKey: null,
   pageTitle: null,
 
+  queryParams: {
+    sortDesc: { refreshModel: true },
+    sortKey: { refreshModel: true },
+    startKey: { refreshModel: true }
+  },
+
   _getFilterParams: function(params) {
     let filterByList = [];
     let filterParams = this.get('filterParams');
@@ -100,14 +106,7 @@ export default Ember.Route.extend(PouchDbMixin, ProgressDialog, AuthenticatedRou
           }.bind(this),
           reject
         );
-
     }.bind(this));
-  },
-
-  queryParams: {
-    sortDesc: { refreshModel: true },
-    sortKey: { refreshModel: true },
-    startKey: { refreshModel: true }
   },
 
   setupController: function(controller, model) {

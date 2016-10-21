@@ -56,6 +56,7 @@ export default AbstractModel.extend(DOBDays, PatientName, {
 
   age: function() {
     let dob = this.get('dateOfBirth');
+
     return this.convertDOBToText(dob);
   }.property('dateOfBirth'),
 

@@ -4,7 +4,9 @@ import PatientId from 'hospitalrun/mixins/patient-id';
 import { translationMacro as t } from 'ember-i18n';
 
 export default AbstractModuleRoute.extend(PatientId, {
+  moduleName: 'patients',
   addCapability: 'add_patient',
+
   additionalModels: [{
     name: 'addressOptions',
     findArgs: ['option', 'address_options']
@@ -40,6 +42,8 @@ export default AbstractModuleRoute.extend(PatientId, {
     findArgs: ['lookup', 'visit_types']
   }],
 
+  newButtonText: t('patients.buttons.newPatient'),
+
   actions: {
     createNewVisit: function(patient, visits) {
       let lastVisit = visits.get('lastObject');
@@ -54,7 +58,5 @@ export default AbstractModuleRoute.extend(PatientId, {
         newRoute.currentModel.setProperties(propertiesToSet);
       }.bind(this));
     }
-  },
-  newButtonText: t('patients.buttons.newPatient'),
-  moduleName: 'patients'
+  }
 });

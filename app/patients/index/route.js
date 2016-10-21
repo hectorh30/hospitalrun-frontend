@@ -3,6 +3,7 @@ import { translationMacro as t } from 'ember-i18n';
 
 export default AbstractIndexRoute.extend({
   modelName: 'patient',
+
   pageTitle: t('patients.titles.patientListing'),
 
   _getStartKeyFromItem: function(item) {
@@ -16,5 +17,4 @@ export default AbstractIndexRoute.extend({
       mapReduce: 'patient_by_display_id'
     };
   }
-
 });

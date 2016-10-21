@@ -1,4 +1,5 @@
 import Ember from 'ember';
+
 export default Ember.Component.extend({
   classNames: ['sortable-column'],
   tagName: 'th',
@@ -6,9 +7,11 @@ export default Ember.Component.extend({
   sortDesc: false,
   sortBy: null,
   sortKey: null,
+
   sorted: function() {
     let sortBy = this.get('sortBy');
     let sortKey = this.get('sortKey');
+
     return sortBy === sortKey;
   }.property('sortBy', 'sortKey'),
 
@@ -16,9 +19,11 @@ export default Ember.Component.extend({
     let sortBy = this.get('sortBy');
     let sorted = this.get('sorted');
     let sortDesc = false;
+
     if (sorted) {
       sortDesc = this.toggleProperty('sortDesc');
     }
+
     this.sendAction('action', sortBy, sortDesc);
   }
 });
