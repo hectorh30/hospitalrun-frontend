@@ -20,6 +20,7 @@ export default Ember.Mixin.create(PouchDbMixin, {
 
     let findUnusedId = (sequence) => {
       let current, id;
+
       return config.getPatientPrefix()
         .then(function(prefix) {
           current = sequence.get('value');
@@ -28,18 +29,22 @@ export default Ember.Mixin.create(PouchDbMixin, {
             startkey: [id, null],
             endkey: [id, maxValue]
           };
+
           return database.queryMainDB(query, 'patient_by_display_id');
         })
         .then(function(found) {
           if (!isEmpty(found.rows)) {
             sequence.incrementProperty('value');
+
             return findUnusedId(sequence);
           }
+
           if (sequence.get('hasDirtyAttributes')) {
             return sequence.save().then(function() {
               return id;
             });
           }
+
           return id;
         });
     };
@@ -52,6 +57,7 @@ export default Ember.Mixin.create(PouchDbMixin, {
           id: 'patient',
           value: 1
         }));
+
         return findUnusedId(sequence);
       });
   }

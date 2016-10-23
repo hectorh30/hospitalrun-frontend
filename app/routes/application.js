@@ -11,12 +11,14 @@ let ApplicationRoute = Route.extend(ApplicationRouteMixin, SetupUserRole, {
   shouldSetupUserRole: true,
 
   actions: {
+
     closeModal: function() {
       this.disconnectOutlet({
         parentView: 'application',
         outlet: 'modal'
       });
     },
+
     /**
      * Render a modal using the specifed path and optionally set a model.
      * @param modalPath the path to use for the controller and template.
@@ -26,6 +28,7 @@ let ApplicationRoute = Route.extend(ApplicationRouteMixin, SetupUserRole, {
       if (model) {
         this.controllerFor(modalPath).set('model', model);
       }
+
       this.renderModal(modalPath);
     },
 

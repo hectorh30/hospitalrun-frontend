@@ -2,7 +2,8 @@ import { Model } from 'ember-pouch';
 import DS from 'ember-data';
 
 export default Model.extend({
-  _attachments: DS.attr(), // Temporarily store file as attachment until it gets uploaded to the server
+  // Temporarily store file as attachment until it gets uploaded to the server
+  _attachments: DS.attr(),
   importFile: DS.attr('boolean', { defaultValue: false }),
   value: DS.attr(''),
   organizeByType: DS.attr('boolean'),

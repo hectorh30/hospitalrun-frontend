@@ -27,13 +27,14 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
   idParam: function() {
     let modelName = this.get('modelName');
+
     return `${modelName}_id`;
   }.property('modelName'),
 
   /**
    * Override this function to generate an id for a new record
-   * @return a promise that will resolved to a generated id;default is null which means that an
-   * id will be automatically generated via Ember data.
+   * @return a promise that will resolved to a generated id; default is null which
+   * means that an id will be automatically generated via Ember data.
    */
   generateId: function() {
     return Ember.RSVP.resolve(null);
@@ -49,23 +50,27 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
   model: function(params) {
     let idParam = this.get('idParam');
+
     if (!Ember.isEmpty(idParam) && params[idParam] === 'new') {
       return this._createNewRecord(params);
-    } else {
-      return this._super(params);
     }
+
+    return this._super(params);
   },
 
   setupController: function(controller, model) {
     let sectionDetails = {};
+
     if (model.get('isNew')) {
       sectionDetails.currentScreenTitle = this.get('newTitle');
     } else {
       sectionDetails.currentScreenTitle = this.get('editTitle');
     }
+
     if (this.get('hideNewButton')) {
       sectionDetails.newButtonAction = null;
     }
+
     this.send('setSectionHeader', sectionDetails);
     this._super(controller, model);
   }
