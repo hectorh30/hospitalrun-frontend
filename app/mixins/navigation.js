@@ -278,7 +278,7 @@ export default Ember.Mixin.create({
           title: 'User Roles',
           iconClass: 'octicon-chevron-right',
           route: 'admin.roles',
-          capability: 'user_roles'
+          capability: 'define_user_roles'
         },
         {
           title: 'Workflow',
@@ -304,7 +304,7 @@ export default Ember.Mixin.create({
       let sectionKey = localizationPrefix + camelize(nav.title).toLowerCase();
       let navTranslated = this.get('i18n').t(sectionKey);
 
-      nav.localizedTitle = translationOrOriginal(navTranslated, nav.title);
+      Ember.set(nav, 'localizedTitle', translationOrOriginal(navTranslated, nav.title));
       // Map all of the sub navs, too
       nav.subnav = nav.subnav.map((sub) => {
         let subItemKey = `${localizationPrefix}subnav.${camelize(sub.title)}`;

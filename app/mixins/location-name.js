@@ -1,9 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
-
-  getDisplayLocationName: function(location, aisleLocation) {
-
+  getDisplayLocationName(location, aisleLocation) {
     let locationName = this.formatLocationName(location, aisleLocation);
 
     if (Ember.isEmpty(locationName)) {
@@ -13,8 +11,7 @@ export default Ember.Mixin.create({
     return locationName;
   },
 
-  formatLocationName: function(location, aisleLocation) {
-
+  formatLocationName(location, aisleLocation) {
     let locationName = '';
 
     if (!Ember.isEmpty(location)) {

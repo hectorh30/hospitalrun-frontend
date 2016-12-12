@@ -7,7 +7,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   modelName: null,
   newTitle: null,
 
-  _createNewRecord: function(params) {
+  _createNewRecord(params) {
     return new Ember.RSVP.Promise(function(resolve) {
       this.generateId().then(function(newId) {
         this.getNewData(params).then(function(data) {
@@ -36,7 +36,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
    * @return a promise that will resolved to a generated id; default is null which
    * means that an id will be automatically generated via Ember data.
    */
-  generateId: function() {
+  generateId() {
     return Ember.RSVP.resolve(null);
   },
 
@@ -44,11 +44,11 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
    * Override this function to define what data a new model should be instantiated with.
    * @return a promise that will resolve with the data for a new record; defaults to empty object.
    */
-  getNewData: function() {
+  getNewData() {
     return Ember.RSVP.resolve({});
   },
 
-  model: function(params) {
+  model(params) {
     let idParam = this.get('idParam');
 
     if (!Ember.isEmpty(idParam) && params[idParam] === 'new') {
@@ -58,7 +58,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     return this._super(params);
   },
 
-  setupController: function(controller, model) {
+  setupController(controller, model) {
     let sectionDetails = {};
 
     if (model.get('isNew')) {

@@ -76,7 +76,10 @@ export default AbstractModel.extend(LocationName, {
       presence: true
     },
     quantity: {
-      numericality: validateIfNewItem
+      numericality: {
+        validateIfNewItem,
+        greaterThanOrEqualTo: 0
+      }
     },
     price: {
       numericality: {
@@ -99,7 +102,7 @@ export default AbstractModel.extend(LocationName, {
     }
   },
 
-  updateQuantity: function() {
+  updateQuantity() {
     let purchases = this.get('purchases');
     let newQuantity = purchases.reduce((previousItem, currentItem) => {
       let currentQuantity = 0;

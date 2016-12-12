@@ -447,12 +447,12 @@ export default Ember.Mixin.create({
       'Patient Administration',
       'System Administrator'
     ],
-    'user_roles': [
+    'define_user_roles': [
       'System Administrator'
     ]
   },
 
-  _getUserSessionVars: function() {
+  _getUserSessionVars() {
     let session = this.get('session');
 
     if (!Ember.isEmpty(session) && session.get('isAuthenticated')) {
@@ -460,7 +460,7 @@ export default Ember.Mixin.create({
     }
   },
 
-  currentUserCan: function(capability) {
+  currentUserCan(capability) {
     let sessionVars = this._getUserSessionVars();
     if (!Ember.isEmpty(sessionVars) && !Ember.isEmpty(sessionVars.role)) {
       let userCaps = this.get('session').get('data.authenticated.userCaps');
@@ -471,7 +471,7 @@ export default Ember.Mixin.create({
           return supportedRoles.includes(sessionVars.role);
         }
       } else {
-        return userCaps.includes(capability);
+        return userCaps.includes(capability.camelize()); // User defined capabilities are camelcased.
       }
     }
     return false;
@@ -483,7 +483,7 @@ export default Ember.Mixin.create({
    * @param {boolean} returnUserName if true, always return the username instead
    * of the display name even if the display name is set.
    */
-  getUserName: function(returnUserName) {
+  getUserName(returnUserName) {
     let returnName;
     let sessionVars = this._getUserSessionVars();
 

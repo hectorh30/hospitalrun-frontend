@@ -3,13 +3,13 @@ import HtmlInput from 'ember-rapid-forms/components/html-input';
 export default HtmlInput.extend({
   _picker: null,
 
-  _shouldSetDate: function(currentDate, picker) {
-    return (picker && (Ember.isEmpty(currentDate) ||
-    Ember.isEmpty(picker.getDate()) ||
-    (currentDate.getTime && picker.getDate().getTime() !== currentDate.getTime())));
+  _shouldSetDate(currentDate, picker) {
+    return (picker && (Ember.isEmpty(currentDate)
+      || Ember.isEmpty(picker.getDate())
+      || (currentDate.getTime && picker.getDate().getTime() !== currentDate.getTime())));
   },
 
-  currentDateChangedValue: function() {
+  currentDateChangedValue() {
     let currentDate = this.get('currentDate');
     let picker = this.get('_picker');
     if (!Ember.isEmpty(currentDate) && this._shouldSetDate(currentDate, picker)) {
@@ -34,7 +34,7 @@ export default HtmlInput.extend({
     }
   }.observes('mainComponent.showTime'),
 
-  dateSet: function() {
+  dateSet() {
     let currentDate = this.get('currentDate');
     let picker = this.get('_picker');
     if (this._shouldSetDate(currentDate, picker)) {
@@ -42,7 +42,7 @@ export default HtmlInput.extend({
     }
   },
 
-  didInsertElement: function() {
+  didInsertElement() {
     let currentDate = this.get('currentDate');
     let $input = this.$('input');
     let picker = null;
@@ -72,11 +72,9 @@ export default HtmlInput.extend({
 
   didReceiveAttrs(/* attrs */) {
     this._super(...arguments);
-    let dateProperty = this.get('mainComponent.property');
+    let dateProperty = this.get('mainComponent.originalPropery');
     let displayPropertyName = `display_${dateProperty}`;
-    this.set('mainComponent.property', displayPropertyName);
     this.currentDate = Ember.computed.alias(`mainComponent.model.${dateProperty}`);
-    this.selectedValue = Ember.computed.alias(`mainComponent.model.${displayPropertyName}`);
     this.minDate = Ember.computed.alias('mainComponent.minDate');
     this.maxDate = Ember.computed.alias('mainComponent.maxDate');
     this.showTime = Ember.computed.alias('mainComponent.showTime');
@@ -85,7 +83,7 @@ export default HtmlInput.extend({
     Ember.Binding.from(`mainComponent.model.errors.${dateProperty}`).to(`mainComponent.model.errors.${displayPropertyName}`).connect(this);
   },
 
-  willDestroyElement: function() {
+  willDestroyElement() {
     let picker = this.get('_picker');
     if (picker) {
       picker.destroy();

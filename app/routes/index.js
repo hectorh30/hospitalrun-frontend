@@ -2,7 +2,7 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 import Ember from 'ember';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
-  afterModel: function() {
+  afterModel() {
     this.controllerFor('navigation').set('allowSearch', false);
   }
 });

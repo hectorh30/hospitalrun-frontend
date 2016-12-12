@@ -3,16 +3,16 @@ import Ember from 'ember';
 // NOTE!!! inventory-locations mixin is needed for fulfill-request mixin!
 export default Ember.Mixin.create({
   actions: {
-    doneFulfillRequest: function() {
+    doneFulfillRequest() {
       // Placeholder function; override if you need to know when fulfillrequest is complete.
     },
 
-    fulfillRequest: function(request, closeModal, increment, skipTransition) {
+    fulfillRequest(request, closeModal, increment, skipTransition) {
       this.performFulfillRequest(request, closeModal, increment, skipTransition);
     }
   },
 
-  performFulfillRequest: function(request, closeModal, increment, skipTransition) {
+  performFulfillRequest(request, closeModal, increment, skipTransition) {
     return new Ember.RSVP.Promise(function(resolve, reject) {
       let markAsConsumed = request.get('markAsConsumed');
       let transactionType = request.get('transactionType');
@@ -44,7 +44,7 @@ export default Ember.Mixin.create({
   /**
    * @private
    */
-  _findQuantity: function(request, purchases, item, increment) {
+  _findQuantity(request, purchases, item, increment) {
     let costPerUnit;
     let requestPurchases = [];
     let quantityOnHand = item.get('quantity');
@@ -117,7 +117,7 @@ export default Ember.Mixin.create({
    * @param {boolean} increment if the request should increment, not decrement
    * @param {boolean} skipTransition if the transition should not run after fulfillment.
    */
-  _finishFulfillRequest: function(request, inventoryItem, closeModal, increment, skipTransition) {
+  _finishFulfillRequest(request, inventoryItem, closeModal, increment, skipTransition) {
     let inventoryLocations = request.get('inventoryLocations');
     let locationsAffected = [];
     let markAsConsumed = request.get('markAsConsumed');
@@ -130,7 +130,7 @@ export default Ember.Mixin.create({
       promises.push(locationToIncrement.save());
       locationsAffected.push({
         name: locationToIncrement.get('locationName'),
-        quantity: quantity
+        quantity
       });
     } else {
       inventoryLocations.reduce(function(quantityNeeded, location) {
@@ -207,7 +207,7 @@ export default Ember.Mixin.create({
    * @returns true if the request is fulfilled; false if it cannot be fulfilled due to a lack
    * of stock.
    */
-  _performFulfillment: function(request, inventoryItem, increment) {
+  _performFulfillment(request, inventoryItem, increment) {
     return new Ember.RSVP.Promise(function(resolve, reject) {
       let purchases = inventoryItem.get('purchases');
       let quantityOnHand = inventoryItem.get('quantity');

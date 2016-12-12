@@ -20,7 +20,6 @@ export default Ember.Service.extend({
   createDB() {
     return new PouchDB('config');
   },
-
   replicateConfigDB(db) {
     let promise = new Ember.RSVP.Promise((resolve) => {
       let url = `${document.location.protocol}//${document.location.host}/db/config`;
@@ -28,7 +27,6 @@ export default Ember.Service.extend({
     });
     return promise;
   },
-
   loadConfig() {
     let config = this.get('configDB');
     let options = {
@@ -58,7 +56,6 @@ export default Ember.Service.extend({
       });
     }, 'getting configuration from the database');
   },
-
   getFileLink(id) {
     let config = this.get('configDB');
     return new Ember.RSVP.Promise(function(resolve, reject) {
@@ -70,14 +67,12 @@ export default Ember.Service.extend({
       });
     });
   },
-
   removeFileLink(id) {
     let config = this.get('configDB');
     return this.getFileLink(id).then(function(fileLink) {
       config.remove(fileLink);
     });
   },
-
   saveFileLink(fileName, id) {
     let config = this.get('configDB');
     return new Ember.RSVP.Promise(function(resolve, reject) {
@@ -89,8 +84,7 @@ export default Ember.Service.extend({
       });
     });
   },
-
-  saveOauthConfigs: function(configs) {
+  saveOauthConfigs(configs) {
     let configDB = this.get('configDB');
     let configKeys = Object.keys(configs);
     let savePromises = [];
@@ -111,7 +105,6 @@ export default Ember.Service.extend({
       return Ember.RSVP.all(savePromises);
     });
   },
-
   useGoogleAuth() {
     return this.getConfigValue('use_google_auth', false);
   },
@@ -136,7 +129,7 @@ export default Ember.Service.extend({
     }, `get ${id} from config database`);
   },
 
-  _getOauthConfigs: function(configKeys) {
+  _getOauthConfigs(configKeys) {
     let configDB = this.get('configDB');
     let options = {
       include_docs: true,
@@ -145,7 +138,7 @@ export default Ember.Service.extend({
     return configDB.allDocs(options);
   },
 
-  setCurrentUser: function(userName) {
+  setCurrentUser(userName) {
     let config = this.get('configDB');
     let sessionData = this.get('sessionData');
     if (!userName && sessionData.authenticated) {
@@ -161,4 +154,5 @@ export default Ember.Service.extend({
       });
     });
   }
+
 });

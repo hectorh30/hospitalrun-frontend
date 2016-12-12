@@ -11,7 +11,6 @@ export default Ember.Component.extend({
   updateButtonClass: '',
   updateButtonText: '',
   cancelButtonText: '',
-
   cancelBtnText: function() {
     let cancelText = this.get('cancelButtonText');
     if (Ember.isEmpty(cancelText)) {
@@ -20,18 +19,23 @@ export default Ember.Component.extend({
       return cancelText;
     }
   }.property('cancelButtonText'),
-
   actions: {
-    cancelAction: function() {
+    cancelAction() {
       this.sendAction('cancelAction');
     },
 
-    updateAction: function() {
+    fireButtonAction(buttonAction) {
+      this.set(buttonAction, buttonAction);
+      this.sendAction(buttonAction);
+    },
+
+    updateAction() {
       this.sendAction('updateButtonAction');
     }
+
   },
 
-  didInsertElement: function() {
+  didInsertElement() {
     let $modal = this.$('.modal').modal();
 
     $modal.on('hidden.bs.modal', function() {
@@ -39,12 +43,10 @@ export default Ember.Component.extend({
     }.bind(this));
   },
 
-  willDestroyElement: function() {
+  willDestroyElement() {
     let $modal = this.$('.modal');
-
     $modal.off('hidden.bs.modal');
     $modal.modal('hide');
-
     // jquery fixes
     $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();

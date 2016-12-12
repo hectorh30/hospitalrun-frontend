@@ -30,6 +30,14 @@
             {{ updateButtonText }}
           </button>
         {{/unless}}
+        {{#each additionalButtons as |button|}}
+            <button class="{{button.class}}" {{action 'fireButtonAction' button.buttonAction}}>
+              {{#if button.buttonIcon}}
+                <span class="{{button.buttonIcon}}"></span>
+              {{/if}}
+              {{button.buttonText}}
+            </button>
+        {{/each}}
       </div>
     </div>
   </div>
